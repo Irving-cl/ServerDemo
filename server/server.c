@@ -1,4 +1,7 @@
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -34,19 +37,20 @@ void str_echo(int sockfd) {
 
 again:
 	while ((n = read(sockfd, buf, MAXLINE)) > 0) {
-		writen(sockfd, buf, n);
+		write(sockfd, buf, n);
 	}
 	if (n < 0 && errno == EINTR) {    // EINTR：信号中断造成的错误返回值
 		goto again;
 	} else if (n < 0) {
-		err_sys("str_echo: read error");
+		perror("str_echo: read error");
+		exit(1);
 	}
 }
 
 int main(int argc, char **argv) {
 	int    listenfd, connfd;
 	pid_t  childpid;
-	socklen_t chilen;    // 即int，客户端地址长度
+	socklen_t clilen;    // 即int，客户端地址长度
 	struct sockaddr_in cliaddr, servaddr;
 
 	/*
