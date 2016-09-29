@@ -1,9 +1,6 @@
 
 #include "../include/def.h"
 
-#define LISTENQ        1024     /* 等待连接队列的最大长度 */
-#define MAXLINE        4096     /* 一行的最大长度 */
-
 /* 
  * in_addr结构
  * typedef uint32_t in_addr_t;
