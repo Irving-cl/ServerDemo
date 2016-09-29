@@ -1,17 +1,8 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <string.h>
-
-#define SA  struct sockaddr
+#include "../include/def.h"
 
 #define LISTENQ        1024     /* 等待连接队列的最大长度 */
 #define MAXLINE        4096     /* 一行的最大长度 */
-#define SERV_PORT      9877
 
 /* 
  * in_addr结构
