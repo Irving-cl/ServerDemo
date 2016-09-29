@@ -1,4 +1,9 @@
-*.[o]
+# Object files
+*.o
+
+# Executable files
 *-exe
-test
+
+# Makefile
+!makefile
 
