@@ -13,24 +13,42 @@ ssize_t readline(int fd, void *vptr, size_t maxlen) {
                 break;
         } else if (rc == 0) {
             if (n == 1)
-                return 0;   /* EOF, 没有读到数据 */
+                return 0;   // EOF, 没有读到数据
             else
-                break;      /* EOF, 读到了一些数据 */
+                break;      // EOF, 读到了一些数据
         } else
-            return -1;      /* error */
+            return -1;      // error
     }
     *ptr = 0;
     return(n);
 }
 
 void str_cli(FILE *fp, int sockfd) {
-    char    sendline[MAXLINE], recvline[MAXLINE];
-    while (fgets(sendline, MAXLINE, fp) != NULL) {
-        write(sockfd, sendline, strlen(sendline));
-        if (readline(sockfd, recvline, MAXLINE) == 0) {
-            perror("str_cli: server terminated prematurely");
+    int    maxfdpl;                               // 待测试的描述符个数，值为待测试的最大描述符+1
+    fd_set rset;                                  // 读描述符集，这里有标准输入和socket两个
+    char   sendline[MAXLINE], recvline[MAXLINE];
+
+    FD_ZERO(&rset);                               // 描述符集置0
+    for ( ; ; ) {
+        FD_SET(fileno(fp), &rset);                // 将标准输入置为感兴趣
+        FD_SET(sockfd, &rset);                    // 将socket置为感兴趣
+        maxfdpl = max(fileno(fp), sockfd) + 1;    // 设置待测试的描述符个数
+        select(maxfdpl, &rset, NULL, NULL, NULL); // 调用select，只有在两个描述符中任何一个可读时才返回
+
+        if (FD_ISSET(sockfd, &rset)) {            // select返回后发现socket可读
+            if (readline(sockfd, recvline, MAXLINE) == 0) {
+                perror("str_cli: server terminated prematurely");
+                exit(-1);
+            }
+            fputs(recvline, stdout);
         }
-        fputs(recvline, stdout);
+
+        if (FD_ISSET(fileno(fp), &rset)) {        // select返回后发现标准输入可读
+            if (fgets(sendline, MAXLINE, fp) == NULL) {
+                return;                           // 标准输入终止
+            }
+            write(sockfd, sendline, strlen(sendline));
+        }
     }
 }
 
