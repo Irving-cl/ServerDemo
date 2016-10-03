@@ -25,29 +25,41 @@ ssize_t readline(int fd, void *vptr, size_t maxlen) {
 
 void str_cli(FILE *fp, int sockfd) {
     int    maxfdpl;                               // 待测试的描述符个数，值为待测试的最大描述符+1
+    int    stdineof;                              // 表示标准输入的可读性
     fd_set rset;                                  // 读描述符集，这里有标准输入和socket两个
-    char   sendline[MAXLINE], recvline[MAXLINE];
+    char   buf[MAXLINE];
+    int    n;
 
+    stdineof = 0;
     FD_ZERO(&rset);                               // 描述符集置0
     for ( ; ; ) {
-        FD_SET(fileno(fp), &rset);                // 将标准输入置为感兴趣
+        if (stdineof == 0) {
+            FD_SET(fileno(fp), &rset);            // 将标准输入置为感兴趣
+        }
         FD_SET(sockfd, &rset);                    // 将socket置为感兴趣
         maxfdpl = max(fileno(fp), sockfd) + 1;    // 设置待测试的描述符个数
         select(maxfdpl, &rset, NULL, NULL, NULL); // 调用select，只有在两个描述符中任何一个可读时才返回
 
         if (FD_ISSET(sockfd, &rset)) {            // select返回后发现socket可读
-            if (readline(sockfd, recvline, MAXLINE) == 0) {
-                perror("str_cli: server terminated prematurely");
-                exit(-1);
+            if ((n = read(sockfd, buf, MAXLINE)) == 0) {
+                if (stdineof == 1) {              // 标准输入也已终止，正常退出
+                    return;
+                } else {                          // 服务器意外终止
+                    perror("str_cli: server terminated prematurely");
+                    exit(-1);
+                }
             }
-            fputs(recvline, stdout);
+            write(fileno(stdout), buf, n);
         }
 
         if (FD_ISSET(fileno(fp), &rset)) {        // select返回后发现标准输入可读
-            if (fgets(sendline, MAXLINE, fp) == NULL) {
-                return;                           // 标准输入终止
+            if ((n = read(fileno(fp), buf, MAXLINE)) == 0) {
+                stdineof = 1;
+                shutdown(sockfd, SHUT_WR);
+                FD_CLR(fileno(fp), &rset);
+                continue;                         // 此时还不能关闭客户端，因为可能有包在从服务端到客户端的路上
             }
-            write(sockfd, sendline, strlen(sendline));
+            write(sockfd, buf, n);
         }
     }
 }
