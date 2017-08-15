@@ -1,7 +1,7 @@
 
-server-exe: server.o
-	gcc -o server-exe server.o
-server.o: server.c ../include/def.h
-	gcc -c server.c
+echo_server: server.o
+	g++ -o echo_server server.o
+server.o: server.cpp
+	g++ -c server.cpp
 clean:
-	rm -f *.o server-exe
+	rm -f *.o echo_server
