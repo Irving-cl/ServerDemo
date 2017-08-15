@@ -1,9 +1,0 @@
-# Object files
-*.o
-
-# Executable files
-*-exe
-
-# Makefile
-!makefile
-
