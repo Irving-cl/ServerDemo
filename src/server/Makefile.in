@@ -260,9 +260,9 @@ $(srcdir)/makefile.in:  $(srcdir)/makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/server/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/server/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/server/makefile
+	  $(AUTOMAKE) --foreign src/server/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
