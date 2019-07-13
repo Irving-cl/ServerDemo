@@ -246,11 +246,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 server_SOURCES = server.c
-CPPFLAGS_COMMON = \
-    -I$(top_srcdir)/include   \
-	$(NULL)
-
-INCLUDES = -I$(top_srcdir)/include
+AM_CPPFLAGS = -I$(top_srcdir)/include
 all: all-am
 
 .SUFFIXES:
