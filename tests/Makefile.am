@@ -10,3 +10,7 @@ TESTS                                           = \
     $(check_PROGRAMS)                             \
 	$(check_SCRIPTS)                              \
 	$(NULL)
+
+TEST_EXTENSIONS = .py
+
+PY_LOG_COMPILER = $(PYTHON)
