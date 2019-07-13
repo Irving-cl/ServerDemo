@@ -1,5 +1,5 @@
 
-#include "../include/def.h"
+#include "def.h"
 
 ssize_t readline(int fd, void *vptr, size_t maxlen) {
     ssize_t n, rc;

@@ -1,7 +1,7 @@
 
-#include "../include/def.h"
+#include "def.h"
 
-/* 
+/*
  * in_addr结构
  * typedef uint32_t in_addr_t;
  * struct in_addr {
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in cliaddr, servaddr;
 
     /*
-     * 创建TCP套接字，并且转换成一个监听套接字 
+     * 创建TCP套接字，并且转换成一个监听套接字
      */
     listenfd = socket(AF_INET, SOCK_STREAM, 0);            // 根据指定的地址族，数据类型和协议创建一个套接字
     bzero(&servaddr, sizeof(servaddr));                    // servaddr清零

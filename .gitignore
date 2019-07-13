@@ -5,5 +5,9 @@
 *-exe
 
 # Makefile
-!makefile
+Makefile
 
+*.deps
+*.log
+*.scan
+*.cache
