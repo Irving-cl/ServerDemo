@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
 AM_INIT_AUTOMAKE([foreign])
-AC_CONFIG_SRCDIR([include/def.h])
+AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
@@ -27,5 +27,6 @@ AC_CHECK_FUNCS([bzero socket])
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/client/Makefile
-                 src/server/makefile])
+                 src/server/Makefile
+                 tests/Makefile])
 AC_OUTPUT

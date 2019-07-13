@@ -585,7 +585,7 @@ PACKAGE_STRING='FULL-PACKAGE-NAME VERSION'
 PACKAGE_BUGREPORT='BUG-REPORT-ADDRESS'
 PACKAGE_URL=''
 
-ac_unique_file="include/def.h"
+ac_unique_file="config.h.in"
 # Factoring default headers for most tests.
 ac_includes_default="\
 #include <stdio.h>
@@ -4525,7 +4525,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile src/Makefile src/client/Makefile src/server/makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile src/client/Makefile src/server/Makefile tests/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5257,7 +5257,8 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/client/Makefile") CONFIG_FILES="$CONFIG_FILES src/client/Makefile" ;;
-    "src/server/makefile") CONFIG_FILES="$CONFIG_FILES src/server/makefile" ;;
+    "src/server/Makefile") CONFIG_FILES="$CONFIG_FILES src/server/Makefile" ;;
+    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -1,2 +1,5 @@
 
-SUBDIRS = src
+SUBDIRS                              = \
+	src                                \
+    tests                              \
+	$(NULL)
