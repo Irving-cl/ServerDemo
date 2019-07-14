@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#--------------------------------------------------------------------------
+# Ensure that buildconf runs from the subdirectory where configure.ac lives
+#
+if test ! -f configure.ac ||
+   test ! -f include/def.h; then
+   echo "Can not run buildconf from outside of curl's source subdirectory!"
+   echo "Change to the subdirectory where buildconf is found, and try again."
+   exit 1
+fi
+
+echo "buildconf: running aclocal"
+${ACLOCAL:-aclocal} || die "aclocal command failed"
+
+echo "buildconf: running autoheader"
+${AUTOHEADER:-autoheader} || die "autoheader command failed"
+
+echo "buildconf: running autoconf"
+${AUTOCONF:-autoconf} || die "autoconf command failed"
+
+echo "buildconf: running automake"
+${AUTOMAKE:-automake} || die "automake command failed"
+
