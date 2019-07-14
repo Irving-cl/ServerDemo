@@ -13,4 +13,6 @@ TESTS                                           = \
 
 TEST_EXTENSIONS = .py
 
+AM_TESTS_ENVIRONMENT = $(NULL)
+
 PY_LOG_COMPILER = $(PYTHON)
