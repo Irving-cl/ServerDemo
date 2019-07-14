@@ -20,5 +20,5 @@ echo "buildconf: running autoconf"
 ${AUTOCONF:-autoconf} || die "autoconf command failed"
 
 echo "buildconf: running automake"
-${AUTOMAKE:-automake} || die "automake command failed"
+${AUTOMAKE:-automake} --add-missing || die "automake command failed"
 
