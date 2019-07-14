@@ -12,3 +12,15 @@ Makefile
 *.scan
 *.cache
 *.trs
+*.in
+*.status
+
+aclocal.m4
+compile
+config.h
+configure
+depcomp
+install-sh
+missing
+stamp-h1
+test-driver
