@@ -1,0 +1,17 @@
+language: python
+python: "2.7"
+
+install: true
+
+script: .travis/script.sh
+
+matrix:
+  include:
+    - env: BUILD_TARGET="test-py-2.7"
+      os: linux
+      compiler: gcc
+      python: "2.7"
+    - env: BUILD_TARGET="test-py-3.6"
+      os: linux
+      compiler: g++
+      python: "3.6"
