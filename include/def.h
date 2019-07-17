@@ -8,7 +8,11 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#else
+#include <time.h>
+#endif // HAVE_SYS_TIME_H
 
 #define SA  struct sockaddr
 
